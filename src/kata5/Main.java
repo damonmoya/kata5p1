@@ -17,7 +17,7 @@ public class Main {
         Connection connection = null;
         try{
             connection = DriverManager.getConnection(URL_BD_SQLite);
-            System.out.println("Base de datos conectada...");
+            System.out.println("Base de datos conectada...\n");
             selectData_PEOPLE(connection);
         }
         catch (SQLException exception) {
@@ -40,12 +40,11 @@ public class Main {
         try{
            Statement statement = connection.createStatement();
            ResultSet resultset = statement.executeQuery(SQL); 
-           System.out.println("Id \t Nombre \t Apellidos \t Departamento");
            while (resultset.next()) {
                System.out.println( 
-                       resultset.getInt("Id") + " \t " + 
-                       resultset.getString("Name") + " \t \t " +
-                       resultset.getString("Apellidos") + " \t " +
+                       resultset.getInt("Id") + "\t" + 
+                       resultset.getString("Name") + "\t" +
+                       resultset.getString("Apellidos") + "\t" +
                        resultset.getString("Departamento"));
            }
         }
