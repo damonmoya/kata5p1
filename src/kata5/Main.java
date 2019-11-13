@@ -19,7 +19,6 @@ public class Main {
             connection = DriverManager.getConnection(URL_BD_SQLite);
             System.out.println("Base de datos conectada...");
             selectData_PEOPLE(connection);
-
         }
         catch (SQLException exception) {
             System.out.println("ERROR Kata5::connect (SQLException)" + exception.getMessage());
@@ -41,16 +40,17 @@ public class Main {
         try{
            Statement statement = connection.createStatement();
            ResultSet resultset = statement.executeQuery(SQL); 
+           System.out.println("Id \t Nombre \t Apellidos \t Departamento");
            while (resultset.next()) {
-               System.out.println("Id \t Nombre \t Apellidos \t Departamento" + 
+               System.out.println( 
                        resultset.getInt("Id") + " \t " + 
-                       resultset.getString("Name") + " \t " +
-                       resultset.getInt("Apellidos") + " \t " +
-                       resultset.getInt("Departamento"));
+                       resultset.getString("Name") + " \t \t " +
+                       resultset.getString("Apellidos") + " \t " +
+                       resultset.getString("Departamento"));
            }
         }
         catch (SQLException exception) {
-            System.out.println("ERROR Kata5::connect-finally (SQLException)" + exception.getMessage());
+            System.out.println("ERROR Kata5: (SQLException)" + exception.getMessage());
         }
         
     }
