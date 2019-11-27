@@ -20,7 +20,8 @@ public class Main {
             connection = DriverManager.getConnection(URL_BD_SQLite);
             System.out.println("Base de datos conectada...\n");
             selectData_PEOPLE(connection);
-            //insertData_PEOPLE(connection);
+            System.out.println("********");
+            createTable_email(connection);
             //System.out.println("********");
             //selectData_PEOPLE(connection);
             
@@ -55,8 +56,22 @@ public class Main {
         }
         catch (SQLException exception) {
             System.out.println("ERROR Kata5: (SQLException)" + exception.getMessage());
+        }  
+    }
+    
+    private static void createTable_email(Connection connection) {
+        String SQL = "CREATE TABLE IF NOT EXISTS direcc_email ( id integer PRIMARY KEY AUTOINCREMENT, direccion text NOT NULL);";
+
+        try{
+           Statement statement = connection.createStatement(); 
+           statement.executeQuery(SQL);
+           
+           System.out.println("Tabla creada con éxito");
+
         }
-        
+        catch (SQLException exception) {
+            System.out.println("ERROR Kata5_createTable: (SQLException) " + exception.getMessage());
+        }  
     }
     
     //private static void insertData_PEOPLE(Connection connection) {
