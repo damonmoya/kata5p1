@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import kata5.view.MailListReader;
 
 public class Main {
     
@@ -20,10 +22,15 @@ public class Main {
             connection = DriverManager.getConnection(URL_BD_SQLite);
             System.out.println("Base de datos conectada...\n");
             selectData_PEOPLE(connection);
-            System.out.println("********");
-            createTable_email(connection);
+            
             //System.out.println("********");
-            //selectData_PEOPLE(connection);
+            //createTable_email(connection);
+            
+            String fileName = new String("email.txt");
+            List<String> mailList = MailListReader.read(fileName);
+            
+            System.out.println("********");
+            insertEmails(connection, mailList);
             
         }
         catch (SQLException exception) {
@@ -74,20 +81,21 @@ public class Main {
         }  
     }
     
-    //private static void insertData_PEOPLE(Connection connection) {
-        //String SQL = "INSERT INTO PEOPLE(ID, NAME, APELLIDOS, DEPARTAMENTO) VALUES (?, ?, ?, ?)";
-        //try{
-           //PreparedStatement preparedstatement = connection.prepareStatement(SQL);
-           //preparedstatement.setInt(1, 27);
-           //preparedstatement.setString(2, "Juan");
-           //preparedstatement.setString(3, "Quesada");
-           //preparedstatement.setString(4, "CMP");
-          // preparedstatement.executeUpdate();
-        //}
-        //catch (SQLException exception) {
-           // System.out.println("ERROR Kata5: (SQLException)" + exception.getMessage());
-        //}
+    private static void insertEmails(Connection connection, List<String> mailList) {
+        String SQL = "INSERT INTO direcc_email(direccion) VALUES (?)";
+        try{
+           PreparedStatement preparedstatement;
+           for (String mail: mailList){
+                preparedstatement = connection.prepareStatement(SQL);
+                preparedstatement.setString(1, mail);
+                preparedstatement.executeUpdate();
+                System.out.println("Email añadido : " + mail);
+           }
+        }
+        catch (SQLException exception) {
+            System.out.println("ERROR Kata5_insertEmails: (SQLException)" + exception.getMessage());
+        }
         
-    //}
+    }
     
 }
